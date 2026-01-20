@@ -2,8 +2,15 @@
 
 Small Express API for a simple user-scoped todo list backed by Prisma (Postgres). This service provides authentication (email/password -> JWT) and CRUD endpoints for todos. The project ships a generated Prisma client and uses `@prisma/adapter-pg` to connect to Postgres.
 
+**🌐 Deployed API**
+
+The API is **live and ready to use** at: **https://todolistapi-ovyy.onrender.com**
+
+You can use the deployed API directly without setting up anything locally. Simply use the deployed URL in all API calls. If you prefer to run it locally or the deployed service is unavailable, follow the local setup instructions below.
+
 **Quick Summary**
-- **Server:** Express, listens on `http://localhost:3000` by default.
+- **Deployed Server:** `https://todolistapi-ovyy.onrender.com`
+- **Local Server:** `http://localhost:3000` (optional)
 - **Auth:** `POST /api/auth/register`, `POST /api/auth/login` (returns JWT).
 - **Todos:** `GET /api/todo/`, `POST /api/todo/add`, `PUT /api/todo/update/:id`, `DELETE /api/todo/delete/:id` (all protected — require `Authorization: Bearer <token>`).
 
@@ -25,7 +32,10 @@ JWT_SECRET=your_jwt_secret_here
 SALT_ROUND=10
 ```
 
-**Install & Run (development)**
+**Install & Run (Local Development - Optional)**
+
+If you want to run the API locally instead of using the deployed version:
+
 1. Change into the project root:
 
 ```bash
@@ -50,10 +60,17 @@ Or run directly:
 npm start
 ```
 
-The server listens on port `3000` by default. Health check:
+The server listens on port `3000` by default. 
+
+**Health Check:**
 
 ```bash
+# Deployed API
+curl https://todolistapi-ovyy.onrender.com/health
+
+# Local API
 curl http://localhost:3000/health
+
 # Expected response: {"status":"ok"}
 ```
 
@@ -99,22 +116,14 @@ curl http://localhost:3000/health
 - **Update Todo**
 
   - Method: `PUT`
-  - URL: `/api/todo/update/:id`
-  - Auth: `Authorization: Bearer <token>`
-  - Body (JSON): any of `{ "title": "new title", "completed": true }`
-
-- **Delete Todo**
-
-  - Method: `DELETE`
-  - URL: `/api/todo/delete/:id`
-  - Auth: `Authorization: Bearer <token>`
-
 **cURL Examples**
+
+All examples use the **deployed API**. To use locally, replace `https://todolistapi-ovyy.onrender.com` with `http://localhost:3000`.
 
 - Register
 
 ```bash
-curl -X POST http://localhost:3000/api/auth/register \
+curl -X POST https://todolistapi-ovyy.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"alice@example.com","password":"password"}'
 ```
@@ -122,7 +131,7 @@ curl -X POST http://localhost:3000/api/auth/register \
 - Login (save the returned token)
 
 ```bash
-curl -X POST http://localhost:3000/api/auth/login \
+curl -X POST https://todolistapi-ovyy.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"alice@example.com","password":"password"}'
 ```
@@ -130,7 +139,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 - Create a todo
 
 ```bash
-curl -X POST http://localhost:3000/api/todo/add \
+curl -X POST https://todolistapi-ovyy.onrender.com/api/todo/add \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"title":"Buy milk"}'
@@ -139,15 +148,25 @@ curl -X POST http://localhost:3000/api/todo/add \
 - List todos
 
 ```bash
-curl -X GET http://localhost:3000/api/todo/ \
+curl -X GET https://todolistapi-ovyy.onrender.com/api/todo/ \
   -H "Authorization: Bearer $TOKEN"
 ```
 
 - Update todo
 
 ```bash
-curl -X PUT http://localhost:3000/api/todo/update/<TODO_ID> \
+curl -X PUT https://todolistapi-ovyy.onrender.com/api/todo/update/<TODO_ID> \
   -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"completed":true}'
+```
+
+- Delete todo
+
+```bash
+curl -X DELETE https://todolistapi-ovyy.onrender.com/api/todo/delete/<TODO_ID> \
+  -H "Authorization: Bearer $TOKEN"
+```H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"completed":true}'
 ```
