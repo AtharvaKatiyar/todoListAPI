@@ -1,11 +1,13 @@
 {
-  "name": "backend",
+  "name": "todoListAPI",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Express API for user-scoped todo list with Prisma and Postgres",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
     "postinstall": "prisma generate"
   },
   "keywords": [],

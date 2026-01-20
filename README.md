@@ -17,7 +17,7 @@ Small Express API for a simple user-scoped todo list backed by Prisma (Postgres)
 - `JWT_SECRET` — secret used to sign JWT tokens (required)
 - `SALT_ROUND` — bcrypt salt rounds (recommended: `10`)
 
-Create a `.env` file in `basics/todoListAPI/src` with at least:
+Create a `.env` file in the root directory (`basics/todoListAPI/`) with at least:
 
 ```
 DATABASE_URL=postgresql://user:pass@localhost:5432/dbname
@@ -26,10 +26,10 @@ SALT_ROUND=10
 ```
 
 **Install & Run (development)**
-1. Change into the `src` folder (the server entrypoint is `src/app.js`):
+1. Change into the project root:
 
 ```bash
-cd basics/todoListAPI/src
+cd basics/todoListAPI
 ```
 
 2. Install dependencies:
